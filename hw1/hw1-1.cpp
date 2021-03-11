@@ -92,7 +92,14 @@ int main()
     cin >> num;
     while(num --){
         cin >> a1 >> a2 >> x >> y >> n;
-        
+        matrix A(2,2);
+        A.data[0][0] = x;
+        A.data[0][1] = y;
+        A.data[1][0] = 1;
+        A.data[1][1] = 0;
+        matrix B(2,1);
+        B.data[0][0] = a2;
+        B.data[1][0] = a1;
     }
     return 0;
 }
