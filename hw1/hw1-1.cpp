@@ -77,7 +77,7 @@ matrix matrix::operator * (const matrix& rhs) {
                 long long sum = 0;
                 for(int32_t k = 0 ; k < rhs.row ; k++)
                 {
-                    sum = sum%1000000007 + (data[i][k]*rhs.data[k][j])%1000000007;
+                    sum = sum%1000000007 + (data[i][k]%1000000007)*(rhs.data[k][j]%1000000007);
                 }
                 tmp.data[i][j] = sum;
             } 
@@ -92,16 +92,12 @@ matrix pown(matrix A,int32_t n)  {
     goal.data[0][1] = 0;
     goal.data[1][0] = 0;
     goal.data[1][1] = 1;
-    matrix base1_A(2,2);
-    base1_A = A;
-    while(n > 1) {
-        if(n%2 == 1) {
-            goal = goal * base1_A;
-        }
+    while(n) {
+        if(n%2 == 1)
+            goal = goal * A;
         A = A * A;
         n /= 2;
     }
-    goal = goal * A;
     return goal;
 }
 
