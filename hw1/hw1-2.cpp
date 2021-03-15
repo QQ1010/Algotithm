@@ -5,7 +5,10 @@
 using namespace std;
 
 
-int64_t list_merge(int64_t list,int64_t )
+int64_t list_merge(int64_t list,int64_t front,int64_t later) {
+    int64_t rightarr[];
+    int64_t leftarr[];
+}
 
 int64_t rmerge(int64_t list[],int64_t upper,int64_t lower) {
     if(upper <= lower) {
