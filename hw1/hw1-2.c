@@ -11,23 +11,23 @@ int64_t merge(int64_t list[], int64_t sorted[] ,int64_t begin , int64_t end) {
     }
     counter += merge(list,sorted,begin,mid);
     counter += merge(list,sorted,mid+1,end);
-    int64_t rindex = begin;
-    int64_t lindex = mid+1;
+    int64_t lindex = begin;
+    int64_t rindex = mid+1;
     int64_t sindex = begin;
-    while( rindex <= mid && lindex <= end) {
-        if(list[rindex] < list[lindex]) {
-            sorted[sindex++] = list[rindex++];
-        }
-        else if(list[rindex] > list[lindex]) {
+    while( lindex <= mid && rindex <= end) {
+        if(list[lindex] < list[rindex]) {
             sorted[sindex++] = list[lindex++];
-            counter += (mid - rindex + 1);
+        }
+        else if(list[lindex] > list[rindex]) {
+            sorted[sindex++] = list[rindex++];
+            counter += (mid - lindex + 1);
         }
     }
-    while(rindex <= mid) {
-        sorted[sindex++] = list[rindex++];
-    }
-    while(lindex <= end) {
+    while(lindex <= mid) {
         sorted[sindex++] = list[lindex++];
+    }
+    while(rindex <= end) {
+        sorted[sindex++] = list[rindex++];
     }
     for(int64_t i = begin ; i < sindex ; i++)
     {
