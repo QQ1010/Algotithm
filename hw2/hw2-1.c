@@ -6,23 +6,23 @@ int main(){
     int32_t maxbag = 0;
     int32_t weight[101] = {0};
     int32_t value[101] = {0};
+    scanf("%d %d",&num,&maxbag);
     int32_t n_tmp = num+1;
     int32_t b_tmp = maxbag+1;
     int64_t table[n_tmp][b_tmp];
-    scanf("%d %d",&num,&maxbag);
     for(int32_t i = 1 ; i <= num ; i++) {
         scanf("%d %d",&weight[i],&value[i]);
     }
-    for(int32_t i = 1 ; i <= num ; i++) {
-        for(int32_t j = 1 ; j <= maxbag ; j++) {
+    for(int32_t i = 0 ; i <= num ; i++) {
+        for(int32_t j = 0 ; j <= maxbag ; j++) {
             if(i == 0) 
                 table[i][j] = 0;
             else if( j == 0)
                 table[i][j] = 0;
         }
     }
-    for(int32_t i = 0 ; i < num+1 ; i++) {
-        for(int32_t  j = 0 ; j < maxbag+1 ; j++) {
+    for(int32_t i = 1 ; i <= num ; i++) {
+        for(int32_t  j = 1 ; j <= maxbag ; j++) {
             if(j - weight[i] < 0) {
                 table[i][j] = table[i-1][j];
             }
@@ -36,11 +36,12 @@ int main(){
             }
         }
     }
-    for(int32_t i = 0 ; i < num+1 ; i++) {
-        for(int32_t j = 0 ; j < maxbag+1 ; j++) {
-            printf("%ld ",table[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+    printf("%ld\n",table[num][maxbag]);
 }
+    // for(int32_t i = 0 ; i <= num ; i++) {
+    //     for(int32_t j = 0 ; j <= maxbag ; j++) {
+    //         printf("%ld ",table[i][j]);
+    //     }
+    //     printf("\n");
+    // }
+    // printf("\n");
