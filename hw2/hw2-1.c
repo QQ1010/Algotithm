@@ -38,10 +38,3 @@ int main(){
     }
     printf("%ld\n",table[num][maxbag]);
 }
-    // for(int32_t i = 0 ; i <= num ; i++) {
-    //     for(int32_t j = 0 ; j <= maxbag ; j++) {
-    //         printf("%ld ",table[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-    // printf("\n");
