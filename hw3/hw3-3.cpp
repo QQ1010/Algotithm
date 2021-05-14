@@ -43,7 +43,10 @@ int main() {
     p.push(position{P_position[0],P_position[1]});
     for(int32_t i = 0 ; i < k ; i++) {
         position tmp = q.front();
-        cout << map[tmp.x][tmp.y] << tmp.x << tmp.y << endl;
+        cout << map[tmp.x][tmp.y] << endl;
+        if(q.empty()) {
+            break;
+        }
         ans ++;
         if(map[tmp.x][tmp.y] == 'T') {
             BT = true;
@@ -53,9 +56,14 @@ int main() {
             bool PB = false;
             bool pvisited[35][35] = {false};
             for(int32_t j = 0 ; j < k ; j++) {
+                if(p.empty()){
+                    break;
+                }
                 position ptmp = p.front();
                 if(ptmp.x == tmp.x+1 && ptmp.y == tmp.y){
                     PB = true;
+                    p = queue<position>();
+                    p.push(position{P_position[0],P_position[1]});
                     break;
                 }
                 if(map[ptmp.x-1][ptmp.y] == '.' && pvisited[ptmp.x-1][ptmp.y] == false)
@@ -69,16 +77,24 @@ int main() {
                 pvisited[ptmp.x][ptmp.y] = true;
                 p.pop();
             }
-            if(PB)
+            if(PB) {
                 q.push(position{tmp.x-1 , tmp.y});
+                P_position[0] = tmp.x;
+                P_position[1] = tmp.y;
+            }
         }
         if(map[tmp.x+1][tmp.y] == '.' && bvisited[tmp.x+1][tmp.y] == false) {
             bool PB = false;
             bool pvisited[35][35] = {false};
             for(int32_t j = 0 ; j < k ; j++) {
+                if(p.empty()){
+                    break;
+                }
                 position ptmp = p.front();
                 if(ptmp.x == tmp.x-1 && ptmp.y == tmp.y){
                     PB = true;
+                    p.push(position{P_position[0],P_position[1]});
+                    p = queue<position>();
                     break;
                 }
                 if(map[ptmp.x-1][ptmp.y] == '.' && pvisited[ptmp.x-1][ptmp.y] == false)
@@ -92,16 +108,24 @@ int main() {
                 pvisited[ptmp.x][ptmp.y] = true;
                 p.pop();
             }
-            if(PB)
+            if(PB) {
                 q.push(position{tmp.x+1 , tmp.y});
+                P_position[0] = tmp.x;
+                P_position[1] = tmp.y;
+            }
         }
         if(map[tmp.x][tmp.y-1] == '.' && bvisited[tmp.x][tmp.y-1] == false) {
             bool PB = false;
             bool pvisited[35][35] = {false};
             for(int32_t j = 0 ; j < k ; j++) {
+                if(p.empty()) {
+                    break;
+                }
                 position ptmp = p.front();
                 if(ptmp.x == tmp.x && ptmp.y == tmp.y+1){
                     PB = true;
+                    p = queue<position>();
+                    p.push(position{P_position[0],P_position[1]});
                     break;
                 }
                 if(map[ptmp.x-1][ptmp.y] == '.' && pvisited[ptmp.x-1][ptmp.y] == false)
@@ -115,16 +139,23 @@ int main() {
                 pvisited[ptmp.x][ptmp.y] = true;
                 p.pop();
             }
-            if(PB)
+            if(PB) {
                 q.push(position{tmp.x , tmp.y-1});
+                P_position[0] = tmp.x;
+                P_position[1] = tmp.y;
+            }
         }
         if(map[tmp.x][tmp.y+1] == '.' && bvisited[tmp.x][tmp.y+1] == false) {
             bool PB = false;
             bool pvisited[35][35] = {false};
             for(int32_t j = 0 ; j < k ; j++) {
+                if(p.empty()){
+                    break;
+                }
                 position ptmp = p.front();
                 if(ptmp.x == tmp.x && ptmp.y == tmp.y-1){
                     PB = true;
+                    p.push(position{P_position[0],P_position[1]});
                     break;
                 }
                 if(map[ptmp.x-1][ptmp.y] == '.' && pvisited[ptmp.x-1][ptmp.y] == false)
@@ -138,8 +169,11 @@ int main() {
                 pvisited[ptmp.x][ptmp.y] = true;
                 p.pop();
             }
-            if(PB)
+            if(PB) {
                 q.push(position{tmp.x , tmp.y+1});
+                P_position[0] = tmp.x;
+                P_position[1] = tmp.y;
+            }
         }
         bvisited[tmp.x][tmp.y] = true;
         q.pop();
