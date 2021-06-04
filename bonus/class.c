@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 void merge(int32_t list[],int32_t sorted[] ,int32_t begin ,int32_t end) {
     int32_t mid = (begin + end)/2;
@@ -31,11 +32,14 @@ void merge(int32_t list[],int32_t sorted[] ,int32_t begin ,int32_t end) {
     }
 }
 
-void binarySearch(int32_t left ,int32_t right ,int32_t list[] ,int32_t dist[],int32_t index,int32_t limit) {
+void binarySearch(int32_t left ,int32_t right ,int32_t list[] ,int32_t dist[],int32_t index,int32_t limit,int32_t k) {
     if(index > limit) {
         return ;
     }
     int32_t middle = (left+right)/2;
+    if(abs(middle - left) >= k) {
+        middle = left + k - 1;
+    }
     int32_t L_dist = list[middle] - list[left];
     int32_t R_dist = list[right] - list[middle];
     if(middle == left) {
@@ -44,13 +48,20 @@ void binarySearch(int32_t left ,int32_t right ,int32_t list[] ,int32_t dist[],in
     if(right == middle) {
         R_dist = -1;
     }
+    // printf("%d %d %d %d %d\n",left,middle,right,L_dist,R_dist);
     if(L_dist >= 0 && R_dist >= 0 && L_dist < R_dist) {
         dist[index] = L_dist;
-        binarySearch(middle+1,right,list,dist,index+1,limit);
+        binarySearch(middle+1,right,list,dist,index+1,limit,k);
     }
     else if(L_dist >= 0 && R_dist >= 0 && L_dist > R_dist) {
-        dist[index] = R_dist;
-        binarySearch(left,middle-1,list,dist,index+1,limit);
+        if(abs(right-middle) <= k) {
+            dist[index] = R_dist;
+        }
+        binarySearch(left,middle-1,list,dist,index+1,limit,k);
+    }
+    else if(L_dist >= 0 && R_dist >= 0 && L_dist == R_dist) {
+        dist[index] = L_dist;
+        binarySearch(middle+1,right,list,dist,index+1,limit,k);
     }
     else if(L_dist < 0 && R_dist >= 0) {
         dist[index] = R_dist;
@@ -69,7 +80,7 @@ void print(int32_t list[],int32_t n) {
 
 int main() {
     int32_t n,m,k;
-    scanf("%d %d %d\n",&n,&m,&k);
+    scanf("%d %d %d",&n,&m,&k);
     int32_t input[200005] = {0};
     int32_t sorted[200005] = {0};
     int32_t distance[200005] = {0};
@@ -81,11 +92,11 @@ int main() {
         return 0;
     }
     merge(input,sorted,0,n-1);
-    binarySearch(0,n-1,sorted,distance,1,m);
-    for(int32_t i = 1 ; i < m ; i++) {
-        printf("%d ",distance[i]);
-    }
-    printf("\n");
+    binarySearch(0,n-1,sorted,distance,1,m,k);
+    // for(int32_t i = 1 ; i <= m ; i++) {
+    //     printf("%d ",distance[i]);
+    // }
+    // printf("\n");
     int32_t ans = distance[1];
     for(int32_t i = 1 ; i <= m ; i++) {
         if(distance[i] > ans) {
