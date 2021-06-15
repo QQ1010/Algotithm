@@ -7,10 +7,9 @@ fordfulkerson algrothim 參考https://www.itread01.com/content/1545247022.html
 #include <stdint.h>
 using namespace std;
 
-int32_t graph[110][110] = {0}; 
-int32_t t[110] = {0};
+int32_t graph[200][200] = {0}; 
+int32_t t[200] = {0};
 int32_t m,n;
-
 void print_graph() {
     for(int32_t i = 0 ; i <= n+m+1 ; i++){
         for(int32_t j = 0 ; j <= n+m+1 ; j++){
@@ -19,16 +18,16 @@ void print_graph() {
         cout << endl;
     }
 }
-void print(int32_t arr[110]) {
+void print(int32_t arr[200]) {
     for(int32_t i = m+n+1 ; i != 0 ; i = arr[i]) {
         cout << "path" << i << "=" << arr[i] << " ";
     }
     cout << endl;
 }
 
-bool bfs(int32_t graph[110][110], int32_t path[110],int32_t t) {
+bool bfs(int32_t graph[200][200], int32_t path[200],int32_t t) {
     queue<int32_t> q;
-    int32_t visited[110] = {0};
+    int32_t visited[200] = {0};
     visited[0] = 1;
     path[0] = 0;
     q.push(0);
@@ -52,7 +51,7 @@ bool bfs(int32_t graph[110][110], int32_t path[110],int32_t t) {
 
 int32_t my_ford_fulkerson(int32_t s,int32_t t) {  // s = 0 , t = n+m+1
     int32_t f = 0;
-    int32_t path[110];
+    int32_t path[200];
     while(bfs(graph,path,t)) {
         // print(path);
         for(int32_t i = t ; i != 0 ; i = path[i]){
