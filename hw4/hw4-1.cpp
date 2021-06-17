@@ -39,27 +39,30 @@ class undirect_graph {
 };*/
 bool cycle(int32_t index,int32_t next,int32_t pre,int32_t* count,int32_t target,int32_t visited[1000]) {
     // cout << index << next << pre << *(count) << target;
-    cout << index << visited[index] << endl;
+    // cout << index << visited[index] << endl;
     if(visited[index] == 1 && index == target) {
-        cout << "stop" << endl;
+        // cout << "stop" << endl;
         return true;
     }
     else if(visited[index] == 1 && index != target) {
-        cout << "false" << endl;
+        // cout << "false" << endl;
         return false;
     }
     else {
-        cout << "check1" << endl;
+        // cout << "check1" << endl;
         for(next ; next <= n ; next++) {
-            cout << index << next << pre << *(count) << target;
-            cout << "check2" << endl;
+            // cout << index << next << pre << *(count) << target;
+            // cout << "check2" << endl;
             if(graph[index][next] != 0 && next != pre && visited[index] != 2) {
                 visited[index] += 1;
                 (*count) += graph[index][next];
-                cout << next << 1 << index << *(count) << target << endl;
+                // cout << next << 1 << index << *(count) << target << endl;
                 if(cycle(next,1,index,count,target,visited)) {
-                    cout << (*count) << endl;
+                    // cout << (*count) << endl;
                     return true;
+                }
+                else {
+                    return false;
                 }
             }
         }
@@ -90,31 +93,32 @@ int main() {
             graph[q][p] = w;
         }
     }
-    printgraph();
+    // printgraph();
     int32_t count[200][5] = {0};
     int32_t tmp = 0;
-    for(int32_t k = 5 ; k <= 5 ; k++) {
+    for(int32_t k = 1 ; k <= n ; k++) {
         for(int32_t g = 1 ; g <= n ; g++) {
             int32_t visited[200] = {0};
-            cycle(k,g,0,&count[k][0],k,visited);
-            if(count[k][0] != 0 && count[k][1] == 0) {
-                count[k][1] = count[k][0];
-            }
-            if(count[k][1] > count[k][0] && count[k][0] != 0) {
-                count[k][1] = count[k][0];
+            if(cycle(k,g,0,&count[k][0],k,visited)) {
+                if(count[k][0] != 0 && count[k][1] == 0) {
+                    count[k][1] = count[k][0];
+                }
+                if(count[k][1] > count[k][0] && count[k][0] != 0) {
+                    count[k][1] = count[k][0];
+                }
             }
             count[k][0] = 0;
         }
     }
-    cout << "count" << endl;
+    // cout << "count" << endl;
     int32_t ans = count[1][1];
     for(int32_t k = 1 ; k <= n ; k++) {
         if(count[k][1] < ans && count[k][1] != 0) {
             ans = count[k][1];
         }
-        cout << count[k][1] << " ";
+        // cout << count[k][1] << " ";
     }
-    cout << endl;
+    // cout << endl;
     if(ans > 0) {
         cout << ans << endl;
     }
@@ -123,3 +127,11 @@ int main() {
     }
     return 0;
 }
+/*
+4 5
+1 2 2
+1 3 4
+3 2 5
+1 4 3
+3 4 6
+*/
